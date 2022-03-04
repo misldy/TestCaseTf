@@ -119,3 +119,63 @@ git config --unset user.name "你的名字"
 git config --unset user.email "你的邮箱"
 ```
 ###### 设置git同时提交github/gitlab
+1. 打开当前项目内.git/config文件，remote "origin"内添加新增的git地址，如下：
+```
+[remote "origin"]
+        url = git@gitee.com:dcys/test-case-tf.git
+        url = git@github.com:misldy/TestCaseTf.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+```
+2. 修改后.git/config文件内容如下：
+```
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+        ignorecase = true
+        precomposeunicode = true
+[remote "origin"]
+        url = git@gitee.com:dcys/test-case-tf.git
+        url = git@github.com:misldy/TestCaseTf.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+```
+3. 命令查看当前设置的git地址
+```
+~% git remote -v
+origin  git@gitee.com:dcys/test-case-tf.git (fetch)
+origin  git@gitee.com:dcys/test-case-tf.git (push)
+origin  git@github.com:misldy/TestCaseTf.git (push)
+```
+4. 创建测试文件提交测试
+```
+vim test.txt # 任意添加一些内容
+
+git add .
+git commit -m '提交测试'
+git push
+```
+5. 提交成功后输出如下：
+```
+枚举对象中: 5, 完成.
+对象计数中: 100% (5/5), 完成.
+使用 8 个线程进行压缩
+压缩对象中: 100% (3/3), 完成.
+写入对象中: 100% (3/3), 2.39 KiB | 2.39 MiB/s, 完成.
+总共 3（差异 1），复用 0（差异 0），包复用 0
+remote: Powered by GITEE.COM [GNK-6.3]
+To gitee.com:dcys/test-case-tf.git
+   1ba0a76..36f995a  master -> master
+枚举对象中: 12, 完成.
+对象计数中: 100% (12/12), 完成.
+使用 8 个线程进行压缩
+压缩对象中: 100% (12/12), 完成.
+写入对象中: 100% (12/12), 4.98 KiB | 4.98 MiB/s, 完成.
+总共 12（差异 4），复用 0（差异 0），包复用 0
+remote: Resolving deltas: 100% (4/4), done.
+To github.com:misldy/TestCaseTf.git
+ * [new branch]      master -> master
+```
