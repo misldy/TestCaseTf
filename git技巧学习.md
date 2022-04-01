@@ -1,3 +1,4 @@
+#### git配置多域名同时上传
 ##### 生成新的SSH keys
 ###### 生成ssh key介绍
 如前所述，许多 Git 服务器(包括但不限于gitee、github、gitlab)都使用 SSH 公钥进行认证。 为了向 Git 服务器提供 SSH 公钥，如果某系统用户尚未拥有密钥，必须事先为其生成一份。 这个过程在所有操作系统上都是相似的。 首先，你需要确认自己是否已经拥有密钥。 默认情况下，用户的 SSH 密钥存储在其 ~/.ssh 目录下。 进入该目录并列出其中内容，你便可以快速确认自己是否已拥有密钥：
@@ -178,4 +179,19 @@ To gitee.com:dcys/test-case-tf.git
 remote: Resolving deltas: 100% (4/4), done.
 To github.com:misldy/TestCaseTf.git
  * [new branch]      master -> master
+```
+##### git上传时忽略不需要的文件
+1. 在项目目录内创建.gitignore文件
+2. 文件内添加需要忽略的文件
+```
+.vscode
+.idea
+```
+3. git命令上传
+4. 若文件已上传过，但后续需要忽略，按照以下方法处理：
+```
+rm -rf 文件
+git rm -r --cached 要忽略的文件
+git add -A (添加所有)
+git push origin 分支
 ```
